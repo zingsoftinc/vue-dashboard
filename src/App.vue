@@ -1,28 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <section class="dashboard">
+      <div class="dashboard__row">
+        <latest-transactions-chart style="flex:2" :entries="transactions" />
+        <transaction-breakdown-chart  :entries="transactions" />
+      </div>
+      <div class="dashboard__row">
+        <transaction-details-grid id="td-grid" :entries="transactions" />
+      </div>
+
+    </section>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import transactions from './data/transactions.js';
+
+import LatestTransactionsChart from './components/LatestTransactionsChart.vue';
+import TransactionBreakdownChart from './components/TransactionBreakdownChart.vue';
+import TransactionDetailsGrid from './components/TransactionDetailsGrid.vue';
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    LatestTransactionsChart,
+    TransactionBreakdownChart,
+    TransactionDetailsGrid,
+  },
+  data() {
+    return {
+      transactions,
+    }
+  },
+  mounted() {
   }
 }
 </script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
