@@ -1,5 +1,5 @@
 <template>
-    <zingchart :data="chartConfig" :height="'100%'"/>
+    <zingchart :data="chartConfig" :height="'100%'" style="flex:2" ref="chart"/>
 </template>
 <script>
 export default {

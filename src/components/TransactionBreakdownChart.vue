@@ -1,5 +1,5 @@
 <template>
-   <zingchart :data="chartConfig"  :height="'100%'"/> 
+   <zingchart :data="chartConfig"  :height="'100%'" ref="chart"/> 
 </template>
 
 <script>
@@ -17,6 +17,19 @@ export default {
         return acc;
       }, {});
       return categories;
+    },
+    values() {
+      const categories = this.entries.reduce((acc, transaction) => {
+        acc[transaction.purchase_type] = acc[transaction.purchase_type] || 0;
+        acc[transaction.purchase_type]++;
+        return acc;
+      }, {});
+      return Object.keys(categories).map((name) => {
+        return {
+          values: [categories[name]],
+          text: name
+        }
+      });
     },
     chartConfig() {
       const colors = [
@@ -56,12 +69,8 @@ export default {
          	  borderWidth: 2,
           }
         },
-        series: Object.keys(this.acquisitionBreakdown).map((type, index) => {
-          return Object.assign(
-            { values: [this.acquisitionBreakdown[type]], text: type},
-            colors[index],
-          );
-        })
+        // Apply the colors to the values array
+        series: this.values.map((o,index) => Object.assign(o, colors[index]))
       };
       return config;
     },

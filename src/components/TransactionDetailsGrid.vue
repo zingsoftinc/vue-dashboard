@@ -28,6 +28,10 @@
 export default {
   props: ['entries'],
   mounted() {
+    // Attach an event listener to ZingGrid
+    this.$refs.myGrid.addEventListener('record:mouseover', (e) => {
+      this.$emit('mouseover', e);
+    });
   }
 }
 </script>
