@@ -10,27 +10,7 @@ export default {
     };
   },
   computed: {
-    acquisitionBreakdown() {
-      const categories = this.entries.reduce((acc, transaction) => {
-        acc[transaction.purchase_type] = acc[transaction.purchase_type] || 0;
-        acc[transaction.purchase_type]++;
-        return acc;
-      }, {});
-      return categories;
-    },
-    values() {
-      const categories = this.entries.reduce((acc, transaction) => {
-        acc[transaction.purchase_type] = acc[transaction.purchase_type] || 0;
-        acc[transaction.purchase_type]++;
-        return acc;
-      }, {});
-      return Object.keys(categories).map((name) => {
-        return {
-          values: [categories[name]],
-          text: name
-        }
-      });
-    },
+
     chartConfig() {
       const colors = [
         {
@@ -51,7 +31,7 @@ export default {
             backgroundColor: '#45D6C4'
           }
         },
-      ]
+      ];
       const config ={
         type: 'pie',
         tooltip: {
@@ -69,8 +49,8 @@ export default {
          	  borderWidth: 2,
           }
         },
-        // Apply the colors to the values array
-        series: this.values.map((o,index) => Object.assign(o, colors[index]))
+        // TODO: Format the data and pass it to the series.
+        series: []
       };
       return config;
     },

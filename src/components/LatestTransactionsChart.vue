@@ -5,11 +5,6 @@
 export default {
   props: ['entries'],
   computed: {
-    values() {
-      return this.entries.map(o => {
-          return [o.timestamp, parseFloat(o.amount.slice(1,-1))]
-       });
-    },
     chartConfig() {
       // TODO: Add a series object
       return {
@@ -64,11 +59,9 @@ export default {
           short:true,
           shortUnit: 'K',
         },
+        // TODO: Format the values for the series.
         series: [
-          {
-            values: this.values,
-            text: 'Sales'
-          }
+
         ],
       };
     }

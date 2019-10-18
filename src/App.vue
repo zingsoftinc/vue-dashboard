@@ -2,15 +2,14 @@
   <div id="app">
     <section class="dashboard">
       <header>
-        <h4>Date Range</h4>
-        <v-date-picker mode="range" v-model="range"/>
+        <!-- date range placeholder -->
       </header>
       <div class="dashboard__row">
-        <latest-transactions-chart ref="latestTransactions" :entries="filteredTransactions" />
-        <transaction-breakdown-chart ref="transactionBreakdown" :entries="filteredTransactions" />
+        <latest-transactions-chart ref="latestTransactions" />
+        <transaction-breakdown-chart ref="transactionBreakdown"  />
       </div>
       <div class="dashboard__row">
-        <transaction-details-grid :entries="filteredTransactions" @mouseover="handleEntryHover"/>
+        <transaction-details-grid />
       </div>
     </section>
   </div>
@@ -30,48 +29,16 @@ export default {
     TransactionBreakdownChart,
     TransactionDetailsGrid,
   },
-
   data() {
     return {
       transactions,
-      range: {
-        start: new Date(new Date().setDate(1)),
-        end: new Date() 
-      }
     }
   },
   computed: {
-    filteredTransactions() {
-      return this.transactions.filter(entry => {
-        return (
-          entry.timestamp >= this.range.start.getTime() &&
-          entry.timestamp < this.range.end.getTime()
-        );
-      });
-    }
+
   },
   methods: {
-    handleEntryHover(e) {
 
-      // Obtain references to the charts
-      let latestTransactions = this.$refs.latestTransactions.$refs.chart;
-      let transactionBreakdown = this.$refs.transactionBreakdown.$refs.chart;
-
-      debugger;
-      // Set our guide corresponding to the correct timestamp
-      
-      latestTransactions.setguide({
-        keyvalue: e.detail.ZGData.data.timestamp,
-      });
-      // Highlight the pie slice in focus
-      const indexInFocus = transactionBreakdown
-        .getseriesdata()
-        .findIndex(o => o.text === e.detail.ZGData.data.purchase_type);
-      transactionBreakdown.showhoverstate({
-        plotindex: indexInFocus,
-        nodeindex: 0
-      });
-    }
   }
 }
 </script>
